@@ -1,0 +1,49 @@
+<?php
+
+namespace Modules\User\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreUserRequest extends FormRequest
+{
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'role_id' => 'required|exists:roles,id',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password',
+            'timezone_code' => 'required',
+            'language_code' => 'required'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => @lang('user::field.name'),
+            'email' => @lang('user::field.email'),
+            'role_id' => @lang('user::field.role_id'),
+            'password' => @lang('user::field.password'),
+            'password_confirmation' => @lang('user::field.password_confirmation'),
+            'timezone_code' => @lang('user::field.timezone_code'),
+            'language_code' => @lang('user::field.language_code')
+        ];
+    }
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+}

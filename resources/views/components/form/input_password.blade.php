@@ -1,0 +1,1 @@
+<input type="password" name="{{$name}}" class="form-control @isset($class) {{$class}} @endif @error($name) is-invalid @enderror" id="@isset($id) {{ $id }} @else {{$name}} @endif" @if(isset($placeholder)) placeholder="{{$placeholder}}" @endif value="@if(isset($value)){{$value}}@else{{old($name)}}@endif" @if(isset($required)) @if($required) required @endif @endif>

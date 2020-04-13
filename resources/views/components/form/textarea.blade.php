@@ -1,0 +1,1 @@
+<textarea name="{{$name}}" class="form-control @isset($class) {{$class}} @endif @error($name) is-invalid @enderror" id="@isset($id) {{ $id }} @else {{$name}} @endif" @if(isset($placeholder)) placeholder="{{$placeholder}}" @endif @if(isset($required)) @if($required) required @endif @endif>@if(isset($value)){{$value}}@else{{old($name)}}@endif</textarea>
