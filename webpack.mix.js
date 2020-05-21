@@ -19,13 +19,15 @@ mix.autoload({
     'jquery',
     'datatables.net',
     'datatables.net-bs4',
-    'datatables.net-responsive-bs4'
+    'datatables.net-responsive-bs4',
+    'smartmenus'
  ]).sourceMaps();
 
  mix.sass('resources/sass/app.scss', 'public/css/app.css');
 
  mix.styles([
     'node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css',
+    'node_modules/smartmenus/dist/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.css',
     'node_modules/@fortawesome/fontawesome-free/css/all.css',
     'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
     'node_modules/datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.min.css'

@@ -1,0 +1,50 @@
+/*!
+ * Sizzle CSS Selector Engine v2.3.5
+ * https://sizzlejs.com/
+ *
+ * Copyright JS Foundation and other contributors
+ * Released under the MIT license
+ * https://js.foundation/
+ *
+ * Date: 2020-03-14
+ */
+
+/*!
+ * SmartMenus jQuery Plugin - v1.1.0 - September 17, 2017
+ * http://www.smartmenus.org/
+ *
+ * Copyright Vasil Dinkov, Vadikom Web Ltd.
+ * http://vadikom.com
+ *
+ * Licensed MIT
+ */
+
+/*!
+ * jQuery JavaScript Library v3.5.1
+ * https://jquery.com/
+ *
+ * Includes Sizzle.js
+ * https://sizzlejs.com/
+ *
+ * Copyright JS Foundation and other contributors
+ * Released under the MIT license
+ * https://jquery.org/license
+ *
+ * Date: 2020-05-04T22:49Z
+ */
+
+/*! Bootstrap 4 integration for DataTables' Responsive
+ * ©2016 SpryMedia Ltd - datatables.net/license
+ */
+
+/*! DataTables 1.10.20
+ * ©2008-2019 SpryMedia Ltd - datatables.net/license
+ */
+
+/*! DataTables Bootstrap 4 integration
+ * ©2011-2017 SpryMedia Ltd - datatables.net/license
+ */
+
+/*! Responsive 2.2.3
+ * 2014-2018 SpryMedia Ltd - datatables.net/license
+ */

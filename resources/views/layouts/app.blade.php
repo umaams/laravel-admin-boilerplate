@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -33,17 +33,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @auth
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Auth
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="{{ url('permissions') }}">Permissions</a>
-                              <a class="dropdown-item" href="{{ url('roles') }}">Roles</a>
-                              <a class="dropdown-item" href="{{ url('users') }}">Users</a>
-                            </div>
-                        </li>
+                    <ul class="nav navbar-nav mr-auto" id="main-menu">
+                        @include(config('laravel-menu.views.bootstrap-items'), ['items' => $MyNavBar->roots()])
                     </ul>
                     @endauth
                     <!-- Right Side Of Navbar -->
