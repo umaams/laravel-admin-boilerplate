@@ -19,18 +19,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-12">
-                            <table id="table" class="table table-striped table-inverse">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>@lang('permission::label.name')</th>
-                                        <th>@lang('permission::label.display_name')</th>
-                                        <th>@lang('permission::label.description')</th>
-                                        <th style="width: 150px;"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                            </table>
+                            @include('permission::layouts.permissions', ['permissions' => $permissions])
                         </div>
                     </div>
                 </div>
@@ -38,22 +27,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-$(function() {
-    $('#table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ url('permissions/datatable') }}',
-        columns: [
-            {data: 'name', name: 'name'},
-            {data: 'display_name', name: 'display_name'},
-            {data: 'description', name: 'description'},
-            {data: 'action', name: 'action', className: 'text-center', searchable: false, orderable: false}
-        ],
-    });
-});
-</script>    
 @endsection

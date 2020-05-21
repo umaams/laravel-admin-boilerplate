@@ -28,8 +28,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::orderBy('name')->get();
-        return view('role::create', compact('permissions'));
+        $permissions = Permission::where('parent_permission_id', '0')->with('childrenPermissions')->get();
+        $permission_ids = [];
+        return view('role::create', compact('permissions', 'permission_ids'));
     }
 
     /**
@@ -62,7 +63,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::with('permissions')->findOrFail($id);
-        $permissions = Permission::orderBy('name')->get();
+        $permissions = Permission::where('parent_permission_id', '0')->with('childrenPermissions')->get();
         $permission_ids = $role->permissions->pluck('id')->all();
         return view('role::edit', compact('role', 'permissions', 'permission_ids'));
     }

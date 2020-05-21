@@ -18,7 +18,12 @@
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-2 col-form-label">@lang('permission::label.name')</label>
                                     <div class="col-sm-3">
-                                        @component('components.form.input_text', ['name' => 'name', 'required' => true]) @endcomponent
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text prepend-name"></span>
+                                            </div>
+                                            @component('components.form.input_text', ['name' => 'name', 'required' => true]) @endcomponent
+                                        </div>                                          
                                         @component('components.alert.invalid_form', ['name' => 'name']) @endcomponent
                                     </div>
                                 </div>
@@ -27,6 +32,18 @@
                                     <div class="col-sm-5">
                                         @component('components.form.input_text', ['name' => 'display_name', 'required' => true]) @endcomponent
                                         @component('components.alert.invalid_form', ['name' => 'display_name']) @endcomponent
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="parent_permission_id" class="col-sm-2 col-form-label">Parent Permission</label>
+                                    <div class="col-sm-5">
+                                        <select name="parent_permission_id" class="form-control">
+                                            <option value="0" data-name="">Main Permission</option>
+                                            @foreach ($permissions as $permission)
+                                            <option value="{{$permission->id}}" data-name="{{$permission->name}}" @if (old('parent_permission_id') == $permission->id) selected @endif>{{$permission->display_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @component('components.alert.invalid_form', ['name' => 'parent_permission_id']) @endcomponent
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -51,4 +68,17 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function setupParentName() {
+    const parent_name = $('select[name=parent_permission_id]').find('option:selected').attr('data-name');
+    $('.prepend-name').html(parent_name + (parent_name != '' ? '.' : ''));
+}
+setupParentName();
+$('select[name=parent_permission_id]').on('change', function (e) {
+    setupParentName();
+});
+</script>
 @endsection

@@ -43,12 +43,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        @foreach ($permissions as $permission)
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="permission_id[]" value="{{$permission->id}}" @if(in_array($permission->id, $permission_ids)) checked @endif>
-                                            <label class="form-check-label">{{$permission->display_name}}</label>
-                                        </div>
-                                        @endforeach
+                                        @include('role::layouts.permissions', ['permissions' => $permissions])
                                     </div>
                                 </div>
                                 <hr>

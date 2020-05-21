@@ -18,7 +18,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('permission::index');
+        $permissions = Permission::where('parent_permission_id', '0')->with('childrenPermissions')->get();
+        return view('permission::index', compact('permissions'));
     }
 
     /**
@@ -27,7 +28,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('permission::create');
+        $permissions = Permission::orderBy('name')->get();
+        return view('permission::create', compact('permissions'));
     }
 
     /**
@@ -37,6 +39,10 @@ class PermissionController extends Controller
      */
     public function store(StorePermissionRequest $request)
     {
+        if ($request->parent_permission_id != 0) {
+            $parentPermission = Permission::findOrFail($request->parent_permission_id);
+            $request->merge(['name' => $parentPermission->name.".".$request->name]);
+        }
         $permission = Permission::create($request->all());
         return redirect('/permissions');
     }
@@ -58,8 +64,9 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        $permission = Permission::findOrFail($id);
-        return view('permission::edit', compact('permission'));
+        $permission = Permission::with(['parent_permission'])->findOrFail($id);
+        $permissions = Permission::whereNotIn('id', [$permission->id])->orderBy('name')->get();
+        return view('permission::edit', compact('permission', 'permissions'));
     }
 
     /**
@@ -70,7 +77,11 @@ class PermissionController extends Controller
      */
     public function update(UpdatePermissionRequest $request, $id)
     {
-        $permission = Permission::findOrFail($id)->update($request->only(['display_name', 'description']));
+        if ($request->parent_permission_id != 0) {
+            $parentPermission = Permission::findOrFail($request->parent_permission_id);
+            $request->merge(['name' => $parentPermission->name.".".$request->name]);
+        }
+        $permission = Permission::findOrFail($id)->update($request->all());
         return redirect('/permissions');
     }
 
@@ -93,7 +104,7 @@ class PermissionController extends Controller
         ->addColumn('action', function ($permission) {
             $text = "";
             $text.= '<a href="'.url('permissions/'.$permission->id.'/edit').'" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> '.__('navigation.edit').'</a>';
-            $text.= "<form class='form-horizontal' style='display: inline;' method='POST' action='".url('permissions/'.$permission->id)."'><input type='hidden' name='_token' value='".csrf_token()."'> <input type='hidden' name='_method' value='DELETE'><button class='btn btn-sm btn-danger' type='submit'><i class='fas fa-trash'></i> ".__('navigation.delete')."</button></form><form>";
+            $text.= "<form class='form-horizontal' style='display: inline;' method='POST' action='".url('permissions/'.$permission->id)."'><input type='hidden' name='_token' value='".csrf_token()."'> <input type='hidden' name='_method' value='DELETE'><button class='btn btn-sm btn-danger' type='submit'><i class='fas fa-trash'></i> ".__('navigation.delete')."</button></form>";
             return $text;
         })
         ->rawColumns(['action'])
