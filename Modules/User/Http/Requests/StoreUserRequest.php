@@ -27,13 +27,13 @@ class StoreUserRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => @lang('user::field.name'),
-            'email' => @lang('user::field.email'),
-            'role_id' => @lang('user::field.role_id'),
-            'password' => @lang('user::field.password'),
-            'password_confirmation' => @lang('user::field.password_confirmation'),
-            'timezone_code' => @lang('user::field.timezone_code'),
-            'language_code' => @lang('user::field.language_code')
+            'name' => __('user::field.name'),
+            'email' => __('user::field.email'),
+            'role_id' => __('user::field.role_id'),
+            'password' => __('user::field.password'),
+            'password_confirmation' => __('user::field.password_confirmation'),
+            'timezone_code' => __('user::field.timezone_code'),
+            'language_code' => __('user::field.language_code')
         ];
     }
 

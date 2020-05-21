@@ -23,9 +23,9 @@ class StorePermissionRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => @lang('permission::field.name'),
-            'display_name' => @lang('permission::field.display_name'),
-            'description' => @lang('permission::field.description'),
+            'name' => __('permission::field.name'),
+            'display_name' => __('permission::field.display_name'),
+            'description' => __('permission::field.description'),
         ];
     }
 

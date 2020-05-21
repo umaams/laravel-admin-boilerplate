@@ -6,6 +6,8 @@ require('datatables.net-bs4');
 require('datatables.net-responsive-bs4');
 require('datatables.net-fixedcolumns-bs4');
 require('datatables.net-fixedheader');
+window.smartmenus = require('smartmenus');
+require('smartmenus/dist/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.min.js');
 
 $.extend(true, $.fn.dataTable.defaults, {
     "language": {

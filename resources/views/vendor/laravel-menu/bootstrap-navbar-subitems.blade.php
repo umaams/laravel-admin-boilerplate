@@ -1,6 +1,6 @@
 @foreach($items as $item)
-  <li class="nav-item @if($item->hasChildren()){{'dropdown'}}@endif">
-    @if($item->link) <a class="nav-link @if($item->hasChildren()){{'dropdown-toggle'}}@endif" @if($item->url()) href="{!! $item->url() !!}" @else href="#" @endif>
+  <li>
+    @if($item->link) <a class="dropdown-item @if($item->hasChildren()){{'dropdown-toggle'}}@endif" @if($item->url()) href="{!! $item->url() !!}" @else href="#" @endif>
       {!! $item->title !!}
       @if($item->hasChildren()) <b class="caret"></b> @endif
     </a>
@@ -9,7 +9,7 @@
     @endif
     @if($item->hasChildren())
       <ul class="dropdown-menu">
-        @include(config('laravel-menu.views.bootstrap-subitems'),
+        @include(config('laravel-menu.views.bootstrap-items'),
 array('items' => $item->children()))
       </ul>
     @endif

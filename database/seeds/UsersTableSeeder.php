@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'khotib.umam7@gmail.com',
             'email_verified_at' => now(),
             'password' => bcrypt('password'),
-            'remember_token' => Str::random(10)
+            'remember_token' => Str::random(10),
+            'language_code' => 'en'
         ]);
         $user->syncRoles([Role::where('name', 'admin')->first()]);
     }

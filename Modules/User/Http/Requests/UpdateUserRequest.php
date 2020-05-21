@@ -24,11 +24,11 @@ class UpdateUserRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => @lang('user::field.name'),
-            'email' => @lang('user::field.email'),
-            'role_id' => @lang('user::field.role_id'),
-            'timezone_code' => @lang('user::field.timezone_code'),
-            'language_code' => @lang('user::field.language_code')
+            'name' => __('user::field.name'),
+            'email' => __('user::field.email'),
+            'role_id' => __('user::field.role_id'),
+            'timezone_code' => __('user::field.timezone_code'),
+            'language_code' => __('user::field.language_code')
         ];
     }
 

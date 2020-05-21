@@ -22,9 +22,9 @@ class UpdateRoleRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => @lang('role::field.name'),
-            'display_name' => @lang('role::field.display_name'),
-            'description' => @lang('role::field.description'),
+            'name' => __('role::field.name'),
+            'display_name' => __('role::field.display_name'),
+            'description' => __('role::field.description'),
         ];
     }
 
