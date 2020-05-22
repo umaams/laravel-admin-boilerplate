@@ -61,3 +61,26 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script>
+    $('input:checkbox').change(function () {
+        $(this).closest('li').next('ul').find("input:checkbox").prop('checked', $(this).prop("checked"));
+        let isFound = true; let currentElement = $(this);
+        while (isFound) {
+            if (currentElement.closest('ul').prev('li').find('input:checkbox').length) {
+                const parentUl = currentElement.closest('ul');
+                isFound = true;
+                currentElement = currentElement.closest('ul').prev('li').find('input:checkbox').first();
+                if (parentUl.find('.form-check-input:checked').length) {
+                    currentElement.prop('checked', true);
+                } else {
+                    currentElement.prop('checked', $(this).prop("checked"));
+                }
+            } else {
+                isFound = false;
+            }
+        }
+    });
+</script>
+@endsection

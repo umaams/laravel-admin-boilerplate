@@ -2,7 +2,7 @@
 @if ($child_permission->permissions)
     <ul>
         @foreach ($child_permission->permissions as $childPermission)
-            @include('role::layouts.child_permission', ['child_permission' => $childPermission])
+            @include('permission::layouts.child_permission', ['child_permission' => $childPermission])
         @endforeach
     </ul>
 @endif
