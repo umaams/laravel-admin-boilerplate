@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-@lang('permission::label.title_create')
+@lang('menu::label.title_create')
 @endsection
 
 @section('content')

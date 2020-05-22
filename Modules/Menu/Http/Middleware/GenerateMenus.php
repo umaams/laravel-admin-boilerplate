@@ -21,25 +21,40 @@ class GenerateMenus
             foreach ($menus as $item) {
                 if ($item->parent_menu_id == 0) {
                     if ($item->link != '#') {
-                        $menu->add($item->name, ['url' => $item->link, 'id' => $item->id])->data('icon', $item->fa_class);
+                        $menu->add($item->name, ['url' => $item->link, 'id' => $item->id])->data('icon', $item->fa_class)->data('permission_id', $item->permission_id);
                     } else {
-                        $menu->add($item->name, ['id' => $item->id])->data('icon', $item->fa_class);
+                        $menu->add($item->name, ['id' => $item->id])->data('icon', $item->fa_class)->data('permission_id', $item->permission_id);
                     }
                 } else {
                     if ($item->link != '#') {
                         $parent = $menu->find($item->parent_menu_id);
                         if ($parent) {
-                            $parent->add($item->name, ['url' => $item->link, 'id' => $item->id])->data('icon', $item->fa_class);
+                            $parent->add($item->name, ['url' => $item->link, 'id' => $item->id])->data('permission_id', $item->permission_id)->data('icon', $item->fa_class);
                         }
                     } else {
                         $parent = $menu->find($item->parent_menu_id);
                         if ($parent) {
-                            $parent->add($item->name, ['id' => $item->id])->data('icon', $item->fa_class);
+                            $parent->add($item->name, ['id' => $item->id])->data('permission_id', $item->permission_id)->data('icon', $item->fa_class);
                         }
                     }
                 }
             }
-        });
+        })->filter(function($item){
+            if (\Auth::check()) {
+                $permissions = \Auth::user()->allPermissions();
+                if ($item->data('permission_id') != 0) {
+                    $permission = $permission->where('id', $item->data('permission_id'))->first();
+                    if ($permission) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    true;
+                }
+            }
+            return false;
+          });
         return $next($request);
     }
 }

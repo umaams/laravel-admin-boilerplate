@@ -21,7 +21,7 @@ class CreateMenusTable extends Migration
             $table->text('description')->nullable();
             $table->integer('item_order')->default(0);
             $table->integer('parent_menu_id')->default(0);
-            $table->integer('permission_id')->nullable();
+            $table->integer('permission_id')->default(0);
             $table->enum('active', ['0', '1'])->default('1');
             $table->timestamps();
         });
