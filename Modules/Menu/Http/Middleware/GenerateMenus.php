@@ -21,15 +21,15 @@ class GenerateMenus
             foreach ($menus as $item) {
                 if ($item->parent_menu_id == 0) {
                     if ($item->link != '#') {
-                        $menu->add($item->name, ['url' => $item->link, 'id' => $item->id]);
+                        $menu->add($item->name, ['url' => $item->link, 'id' => $item->id])->data('icon', $item->fa_class);
                     } else {
-                        $menu->add($item->name, ['id' => $item->id]);
+                        $menu->add($item->name, ['id' => $item->id])->data('icon', $item->fa_class);
                     }
                 } else {
                     if ($item->link != '#') {
-                        $menu->find($item->parent_menu_id)->add($item->name, ['url' => $item->link, 'id' => $item->id]);
+                        $menu->find($item->parent_menu_id)->add($item->name, ['url' => $item->link, 'id' => $item->id])->data('icon', $item->fa_class);
                     } else {
-                        $menu->find($item->parent_menu_id)->add($item->name, ['id' => $item->id]);
+                        $menu->find($item->parent_menu_id)->add($item->name, ['id' => $item->id])->data('icon', $item->fa_class);
                     }
                 }
             }
