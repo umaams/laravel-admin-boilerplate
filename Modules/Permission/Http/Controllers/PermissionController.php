@@ -5,7 +5,6 @@ namespace Modules\Permission\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Yajra\Datatables\Datatables;
 use Modules\Permission\Http\Requests\StorePermissionRequest;
 use Modules\Permission\Http\Requests\UpdatePermissionRequest;
 use Modules\Permission\Entities\Permission;
@@ -94,20 +93,5 @@ class PermissionController extends Controller
     {
         Permission::findOrFail($id)->delete();
         return redirect('/permissions');
-    }
-
-    public function datatable(Request $request)
-    {
-        $permissions = Permission::select(['id', 'name', 'display_name', 'description', 'created_at', 'updated_at']);
-
-        return Datatables::of($permissions)
-        ->addColumn('action', function ($permission) {
-            $text = "";
-            $text.= '<a href="'.url('permissions/'.$permission->id.'/edit').'" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> '.__('navigation.edit').'</a>';
-            $text.= "<form class='form-horizontal' style='display: inline;' method='POST' action='".url('permissions/'.$permission->id)."'><input type='hidden' name='_token' value='".csrf_token()."'> <input type='hidden' name='_method' value='DELETE'><button class='btn btn-sm btn-danger' type='submit'><i class='fas fa-trash'></i> ".__('navigation.delete')."</button></form>";
-            return $text;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
     }
 }

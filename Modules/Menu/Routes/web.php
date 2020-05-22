@@ -11,6 +11,11 @@
 |
 */
 
-Route::prefix('menu')->group(function() {
+Route::prefix('menus')->group(function() {
     Route::get('/', 'MenuController@index');
+    Route::get('/create', 'MenuController@create');
+    Route::post('/', 'MenuController@store');
+    Route::get('/{id}/edit', 'MenuController@edit');
+    Route::put('/{id}', 'MenuController@update');
+    Route::delete('/{id}', 'MenuController@destroy');
 });

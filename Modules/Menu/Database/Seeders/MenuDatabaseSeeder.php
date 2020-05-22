@@ -21,5 +21,6 @@ class MenuDatabaseSeeder extends Seeder
         $permission = Menu::create(['name' => 'Permissions', 'link' => 'permissions', 'parent_menu_id' => $auth->id]);
         $role = Menu::create(['name' => 'Roles', 'link' => 'roles', 'parent_menu_id' => $auth->id]);
         $user = Menu::create(['name' => 'Users', 'link' => 'users', 'parent_menu_id' => $auth->id]);
+        $menu = Menu::create(['name' => 'Menus', 'link' => 'menus', 'parent_menu_id' => $auth->id]);
     }
 }

@@ -18,5 +18,4 @@ Route::prefix('permissions')->group(function() {
     Route::get('/{id}/edit', 'PermissionController@edit');
     Route::put('/{id}', 'PermissionController@update');
     Route::delete('/{id}', 'PermissionController@destroy');
-    Route::get('/datatable', 'PermissionController@datatable');
 });

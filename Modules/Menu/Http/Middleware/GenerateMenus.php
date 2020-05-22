@@ -16,7 +16,7 @@ class GenerateMenus
      */
     public function handle($request, Closure $next)
     {
-        $menus = Menu::orderBy('parent_menu_id')->orderBy('item_order')->get();
+        $menus = Menu::where('active', '1')->orderBy('parent_menu_id')->orderBy('item_order')->get();
         \Menu::make('MyNavBar', function ($menu) use ($menus) {
             foreach ($menus as $item) {
                 if ($item->parent_menu_id == 0) {
@@ -27,9 +27,15 @@ class GenerateMenus
                     }
                 } else {
                     if ($item->link != '#') {
-                        $menu->find($item->parent_menu_id)->add($item->name, ['url' => $item->link, 'id' => $item->id])->data('icon', $item->fa_class);
+                        $parent = $menu->find($item->parent_menu_id);
+                        if ($parent) {
+                            $parent->add($item->name, ['url' => $item->link, 'id' => $item->id])->data('icon', $item->fa_class);
+                        }
                     } else {
-                        $menu->find($item->parent_menu_id)->add($item->name, ['id' => $item->id])->data('icon', $item->fa_class);
+                        $parent = $menu->find($item->parent_menu_id);
+                        if ($parent) {
+                            $parent->add($item->name, ['id' => $item->id])->data('icon', $item->fa_class);
+                        }
                     }
                 }
             }

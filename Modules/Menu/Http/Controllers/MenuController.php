@@ -5,6 +5,10 @@ namespace Modules\Menu\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Menu\Http\Requests\StoreMenuRequest;
+use Modules\Menu\Http\Requests\UpdateMenuRequest;
+use Modules\Permission\Entities\Permission;
+use Modules\Menu\Entities\Menu;
 
 class MenuController extends Controller
 {
@@ -14,7 +18,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return view('menu::index');
+        $menus = Menu::where('parent_menu_id', '0')->with('childrenMenus')->get();
+        return view('menu::index', compact('menus'));
     }
 
     /**
@@ -23,7 +28,9 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menu::create');
+        $menus = Menu::orderBy('name')->get();
+        $permissions = Permission::orderBy('display_name')->get();
+        return view('menu::create', compact('menus', 'permissions'));
     }
 
     /**
@@ -31,9 +38,10 @@ class MenuController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreMenuRequest $request)
     {
-        //
+        $menu = Menu::create($request->all());
+        return redirect('/menus');
     }
 
     /**
@@ -53,7 +61,10 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        return view('menu::edit');
+        $menu = Menu::with(['parent_menu'])->findOrFail($id);
+        $menus = Menu::whereNotIn('id', [$menu->id])->orderBy('name')->get();
+        $permissions = Permission::orderBy('display_name')->get();
+        return view('menu::edit', compact('menu', 'menus', 'permissions'));
     }
 
     /**
@@ -62,9 +73,10 @@ class MenuController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMenuRequest $request, $id)
     {
-        //
+        $menu = Menu::findOrFail($id)->update($request->all());
+        return redirect('/menus');
     }
 
     /**
@@ -74,6 +86,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Menu::findOrFail($id)->delete();
+        return redirect('/menus');
     }
 }
