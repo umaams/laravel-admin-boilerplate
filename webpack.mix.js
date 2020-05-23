@@ -30,7 +30,9 @@ mix.autoload({
     'node_modules/smartmenus/dist/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.css',
     'node_modules/@fortawesome/fontawesome-free/css/all.css',
     'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
-    'node_modules/datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.min.css'
+    'node_modules/datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.min.css',
+    'node_modules/select2/dist/css/select2.min.css',
+    'node_modules/@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css'
 ], 'public/css/vendor.css');
 
 mix.copy([

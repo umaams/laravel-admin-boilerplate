@@ -9,6 +9,7 @@ use Modules\Menu\Http\Requests\StoreMenuRequest;
 use Modules\Menu\Http\Requests\UpdateMenuRequest;
 use Modules\Permission\Entities\Permission;
 use Modules\Menu\Entities\Menu;
+use Cache;
 
 class MenuController extends Controller
 {
@@ -29,8 +30,10 @@ class MenuController extends Controller
     public function create()
     {
         $menus = Menu::orderBy('name')->get();
+        $json = file_get_contents(base_path('icons.json'));
+        $icons = json_decode($json, true);
         $permissions = Permission::orderBy('display_name')->get();
-        return view('menu::create', compact('menus', 'permissions'));
+        return view('menu::create', compact('menus', 'permissions', 'icons'));
     }
 
     /**
@@ -41,6 +44,7 @@ class MenuController extends Controller
     public function store(StoreMenuRequest $request)
     {
         $menu = Menu::create($request->all());
+        Cache::forget('menus_active');
         return redirect('/menus');
     }
 
@@ -64,7 +68,9 @@ class MenuController extends Controller
         $menu = Menu::with(['parent_menu'])->findOrFail($id);
         $menus = Menu::whereNotIn('id', [$menu->id])->orderBy('name')->get();
         $permissions = Permission::orderBy('display_name')->get();
-        return view('menu::edit', compact('menu', 'menus', 'permissions'));
+        $json = file_get_contents(base_path('icons.json'));
+        $icons = json_decode($json, true);
+        return view('menu::edit', compact('menu', 'menus', 'permissions', 'icons'));
     }
 
     /**
@@ -76,6 +82,7 @@ class MenuController extends Controller
     public function update(UpdateMenuRequest $request, $id)
     {
         $menu = Menu::findOrFail($id)->update($request->all());
+        Cache::forget('menus_active');
         return redirect('/menus');
     }
 
@@ -87,6 +94,7 @@ class MenuController extends Controller
     public function destroy($id)
     {
         Menu::findOrFail($id)->delete();
+        Cache::forget('menus_active');
         return redirect('/menus');
     }
 }

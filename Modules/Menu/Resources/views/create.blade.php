@@ -31,8 +31,12 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="fa_class" class="col-sm-2 col-form-label">@lang('menu::label.fa_class')</label>
-                                    <div class="col-sm-2">
-                                        @component('components.form.input_text', ['name' => 'fa_class']) @endcomponent
+                                    <div class="col-sm-3">
+                                        <select name="fa_class" class="form-control">
+                                            @foreach ($icons as $icon)
+                                            <option value="{{$icon}}" @if($icon == old('fa_class')) selected @endif><i class="{{$icon}}"></i> {{$icon}}</option>
+                                            @endforeach
+                                        </select>
                                         @component('components.alert.invalid_form', ['name' => 'fa_class']) @endcomponent
                                     </div>
                                 </div>
@@ -114,6 +118,13 @@ function setupParentName() {
 setupParentName();
 $('select[name=parent_permission_id]').on('change', function (e) {
     setupParentName();
+});
+$('select[name=fa_class]').select2({
+    placeholder: 'Select Icon...',
+    theme: 'bootstrap4',
+    escapeMarkup : function(markup) {
+        return markup;
+    }
 });
 </script>
 @endsection

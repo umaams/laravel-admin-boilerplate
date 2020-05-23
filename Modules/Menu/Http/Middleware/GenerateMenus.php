@@ -4,8 +4,8 @@ namespace Modules\Menu\Http\Middleware;
 
 use Closure;
 use Modules\Menu\Entities\Menu;
-use Modules\User\Entities\User;
 use Auth;
+use DB;
 use Cache;
 
 class GenerateMenus
@@ -21,7 +21,7 @@ class GenerateMenus
     {
         $permissions = [];
         if (Auth::check()) {
-            $permissions = User::findOrFail(Auth::user()->id)->allPermissions();
+            $permissions = \DB::table('role_user')->join('permission_role', 'permission_role.role_id', '=', 'role_user.role_id')->where('user_id', Auth::user()->id)->select('role_user.user_id', 'permission_role.permission_id')->get();
         }
         $menus = Cache::remember('menus_active', config('cache.ttl'), function () {
             return Menu::where('active', '1')->orderBy('parent_menu_id')->orderBy('item_order')->get();
@@ -51,7 +51,7 @@ class GenerateMenus
         })->filter(function($item) use ($permissions) {
             if (Auth::check()) {
                 if ($item->data('permission_id') != 0) {
-                    $permission = $permissions->where('id', $item->data('permission_id'))->first();
+                    $permission = $permissions->where('permission_id', $item->data('permission_id'))->first();
                     if ($permission) {
                         return true;
                     } else {

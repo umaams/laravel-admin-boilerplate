@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.13.0",
+        "@ttskch/select2-bootstrap4-theme": "^1.4.0",
         "datatables": "^1.10.18",
         "datatables.net-bs4": "^1.10.19",
         "datatables.net-fixedcolumns-bs4": "^3.2.6",
