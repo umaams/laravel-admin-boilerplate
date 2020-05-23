@@ -6,6 +6,7 @@ use Closure;
 use Modules\Menu\Entities\Menu;
 use Modules\User\Entities\User;
 use Auth;
+use Cache;
 
 class GenerateMenus
 {
@@ -20,9 +21,11 @@ class GenerateMenus
     {
         $permissions = [];
         if (Auth::check()) {
-            $permissions = Auth::user()->allPermissions();
+            $permissions = User::findOrFail(Auth::user()->id)->allPermissions();
         }
-        $menus = Menu::where('active', '1')->orderBy('parent_menu_id')->orderBy('item_order')->get();
+        $menus = Cache::remember('menus_active', config('cache.ttl'), function () {
+            return Menu::where('active', '1')->orderBy('parent_menu_id')->orderBy('item_order')->get();
+        });
         \Menu::make('MyNavBar', function ($menu) use ($menus) {
             foreach ($menus as $item) {
                 if ($item->parent_menu_id == 0) {
