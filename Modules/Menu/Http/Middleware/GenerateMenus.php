@@ -4,6 +4,8 @@ namespace Modules\Menu\Http\Middleware;
 
 use Closure;
 use Modules\Menu\Entities\Menu;
+use Modules\User\Entities\User;
+use Auth;
 
 class GenerateMenus
 {
@@ -16,6 +18,10 @@ class GenerateMenus
      */
     public function handle($request, Closure $next)
     {
+        $permissions = [];
+        if (Auth::check()) {
+            $permissions = Auth::user()->allPermissions();
+        }
         $menus = Menu::where('active', '1')->orderBy('parent_menu_id')->orderBy('item_order')->get();
         \Menu::make('MyNavBar', function ($menu) use ($menus) {
             foreach ($menus as $item) {
@@ -39,18 +45,17 @@ class GenerateMenus
                     }
                 }
             }
-        })->filter(function($item){
-            if (\Auth::check()) {
-                $permissions = \Auth::user()->allPermissions();
+        })->filter(function($item) use ($permissions) {
+            if (Auth::check()) {
                 if ($item->data('permission_id') != 0) {
-                    $permission = $permission->where('id', $item->data('permission_id'))->first();
+                    $permission = $permissions->where('id', $item->data('permission_id'))->first();
                     if ($permission) {
                         return true;
                     } else {
                         return false;
                     }
                 } else {
-                    true;
+                    return true;
                 }
             }
             return false;
