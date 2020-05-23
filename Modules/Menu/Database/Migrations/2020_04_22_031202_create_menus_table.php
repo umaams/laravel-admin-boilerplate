@@ -17,7 +17,7 @@ class CreateMenusTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('link')->nullable()->default('#');
-            $table->string('fa_class', 20)->nullable();
+            $table->string('fa_class', 50)->nullable();
             $table->text('description')->nullable();
             $table->integer('item_order')->default(0);
             $table->integer('parent_menu_id')->default(0);
