@@ -19,7 +19,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::where('parent_menu_id', '0')->with('childrenMenus')->get();
+        $menus = Menu::where('parent_menu_id', '0')->with('childrenMenus')->orderBy('item_order')->get();
         return view('menu::index', compact('menus'));
     }
 

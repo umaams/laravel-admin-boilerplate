@@ -16,8 +16,6 @@ class StoreMenuRequest extends FormRequest
         return [
             'name' => 'required',
             'link' => 'required',
-            'parent_menu_id' => 'required',
-            'permission_id' => 'required'
         ];
     }
 
@@ -26,8 +24,6 @@ class StoreMenuRequest extends FormRequest
         return [
             'name' => __('menu::field.name'),
             'link' => __('menu::field.link'),
-            'parent_menu_id' => __('menu::field.parent_menu_id'),
-            'permission_id' => __('menu::field.permission_id')
         ];
     }
 

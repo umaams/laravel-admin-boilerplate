@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <form method="post" action="{{ url('permissions') }}" autocomplete="off">
+                            <form method="post" action="{{ url('menus') }}" autocomplete="off">
                                 @csrf
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-2 col-form-label">@lang('menu::label.name')</label>
@@ -111,14 +111,6 @@
 
 @section('scripts')
 <script>
-function setupParentName() {
-    const parent_name = $('select[name=parent_permission_id]').find('option:selected').attr('data-name');
-    $('.prepend-name').html(parent_name + (parent_name != '' ? '.' : ''));
-}
-setupParentName();
-$('select[name=parent_permission_id]').on('change', function (e) {
-    setupParentName();
-});
 $('select[name=fa_class]').select2({
     placeholder: 'Select Icon...',
     theme: 'bootstrap4',
